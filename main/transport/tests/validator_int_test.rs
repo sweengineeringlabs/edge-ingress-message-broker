@@ -1,14 +1,14 @@
 //! Integration tests — Validator trait via SAF.
 
-use swe_edge_ingress_message_broker_transport::{MessageConsumerConfig, TransportSvc, Validator};
+use swe_edge_ingress_message_broker_transport::{validate, MessageConsumerConfig, TransportSvc, Validator};
 
-/// @covers: TransportSvc::validate — delegates to the Validator impl; non-zero default capacity passes.
+/// @covers: validate — delegates to the Validator impl; non-zero default capacity passes.
 #[test]
 fn test_validate_default_consumer_config_capacity_nonzero_returns_ok() {
-    assert!(TransportSvc::validate(&MessageConsumerConfig::default()).is_ok());
+    assert!(validate(&MessageConsumerConfig::default()).is_ok());
 }
 
-/// @covers: TransportSvc::validate — propagates Err from the Validator impl.
+/// @covers: validate — propagates Err from the Validator impl.
 #[test]
 fn test_validate_returns_err_for_zero_capacity() {
     struct Zero;
@@ -17,5 +17,15 @@ fn test_validate_returns_err_for_zero_capacity() {
             Err("zero".into())
         }
     }
-    assert!(TransportSvc::validate(&Zero).is_err());
+    assert!(validate(&Zero).is_err());
+}
+
+/// @covers: TransportSvc::validate — delegates to the Validator impl.
+#[test]
+fn test_transport_svc_validate_delegates_to_impl() {
+    struct AlwaysOk;
+    impl Validator for AlwaysOk {
+        fn validate(&self) -> Result<(), String> { Ok(()) }
+    }
+    assert!(TransportSvc::validate(&AlwaysOk).is_ok());
 }

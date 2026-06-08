@@ -109,3 +109,44 @@ impl TransportSvc {
         Ok(crate::core::NatsMessageConsumer::new(broker))
     }
 }
+
+/// Return a [`ConfigBuilder`](swe_edge_configbuilder::ConfigBuilderImpl) pre-seeded with this crate's name and version.
+pub fn create_config_builder() -> swe_edge_configbuilder::ConfigBuilderImpl {
+    TransportSvc::create_config_builder()
+}
+
+/// Validate any type implementing [`Validator`].
+pub fn validate<V: Validator>(v: &V) -> Result<(), String> {
+    TransportSvc::validate(v)
+}
+
+/// Subscribe to `topic` using any [`MessageConsumer`].
+pub fn subscribe_to<'a>(
+    consumer: &'a dyn MessageConsumer,
+    topic: &'a str,
+) -> BoxFuture<'a, ConsumerResult<MessageStream>> {
+    TransportSvc::subscribe_to(consumer, topic)
+}
+
+/// Run a health check on any [`MessageConsumer`].
+pub fn check_health(consumer: &dyn MessageConsumer) -> BoxFuture<'_, ConsumerResult<()>> {
+    TransportSvc::check_health(consumer)
+}
+
+/// Construct an in-memory consumer backed by a tokio broadcast channel.
+///
+/// Requires the `in-memory` feature.
+#[cfg(feature = "in-memory")]
+pub fn default_consumer() -> impl MessageConsumer + Clone {
+    TransportSvc::default_consumer()
+}
+
+/// Connect to a NATS server and return a consumer handle.
+///
+/// Requires the `nats` feature.
+#[cfg(feature = "nats")]
+pub async fn nats_consumer(
+    url: &str,
+) -> Result<impl MessageConsumer + Clone, crate::ConsumerError> {
+    TransportSvc::nats_consumer(url).await
+}

@@ -2,7 +2,10 @@
 
 #[cfg(feature = "in-memory")]
 mod in_memory_tests {
-    use swe_edge_ingress_message_broker_transport::{MessageConsumer, TransportSvc, Validator};
+    use swe_edge_ingress_message_broker_transport::{
+        check_health, default_consumer, subscribe_to, validate, MessageConsumer, TransportSvc,
+        Validator,
+    };
 
     struct AlwaysValid;
     impl Validator for AlwaysValid {
@@ -11,36 +14,37 @@ mod in_memory_tests {
         }
     }
 
-    /// @covers: TransportSvc::default_consumer
+    /// @covers: default_consumer
     #[tokio::test]
     async fn test_default_consumer_saf_factory_returns_healthy_consumer() {
-        let c = TransportSvc::default_consumer();
+        let c = default_consumer();
         assert!(c.health_check().await.is_ok());
     }
 
-    /// @covers: TransportSvc::subscribe_to
+    /// @covers: subscribe_to
     #[tokio::test]
     async fn test_subscribe_to_returns_stream_for_default_consumer() {
-        let c = TransportSvc::default_consumer();
-        assert!(TransportSvc::subscribe_to(&c, "events.test").await.is_ok());
+        let c = default_consumer();
+        assert!(subscribe_to(&c, "events.test").await.is_ok());
     }
 
-    /// @covers: TransportSvc::check_health
+    /// @covers: check_health
     #[tokio::test]
     async fn test_check_health_returns_ok_for_default_consumer() {
-        let c = TransportSvc::default_consumer();
-        assert!(TransportSvc::check_health(&c).await.is_ok());
+        let c = default_consumer();
+        assert!(check_health(&c).await.is_ok());
     }
 
-    /// @covers: TransportSvc::validate
+    /// @covers: validate
     #[test]
     fn test_validate_returns_ok_for_always_valid() {
-        assert!(TransportSvc::validate(&AlwaysValid).is_ok());
+        assert!(validate(&AlwaysValid).is_ok());
     }
 
-    /// @covers: TransportSvc::create_config_builder
-    #[test]
-    fn test_create_config_builder_returns_builder() {
-        let _builder = TransportSvc::create_config_builder();
+    /// @covers: TransportSvc::default_consumer
+    #[tokio::test]
+    async fn test_transport_svc_default_consumer_returns_healthy_consumer() {
+        let c = TransportSvc::default_consumer();
+        assert!(c.health_check().await.is_ok());
     }
 }

@@ -1,25 +1,24 @@
 //! `swe-edge-ingress-message-broker-transport` — opt-in ingress message consumer port.
 //!
-//! Wraps `swe-edge-runtime-message-broker` as a structured ingress port. Nothing is
-//! compiled unless the caller opts in via a feature flag.
+//! Wraps `swe-edge-runtime-message-broker` as a structured ingress port.
 //!
 //! # Quick start
 //!
 //! ```toml
 //! [dependencies]
-//! swe-edge-ingress-message-broker-transport = { path = "...", features = ["in-memory"] }
+//! swe-edge-ingress-message-broker-transport = { git = "...", features = ["in-memory"] }
 //! ```
 //!
-//! ```rust,ignore
-//! // Requires feature = "in-memory" or "nats" — see Cargo.toml.
-//! use swe_edge_ingress_message_broker_transport::{default_consumer, MessageConsumer};
+//! ```rust,no_run
+//! use swe_edge_ingress_message_broker_transport::{TransportSvc, MessageConsumer};
 //! use futures::StreamExt;
 //!
-//! let consumer = default_consumer();
-//! let mut stream = consumer.subscribe("orders.created").await?;
-//! while let Some(msg) = stream.next().await {
-//!     // process msg
-//! }
+//! # async fn example() -> Result<(), Box<dyn std::error::Error>> {
+//! // Requires feature = "in-memory"
+//! # #[cfg(feature = "in-memory")]
+//! let consumer = TransportSvc::default_consumer();
+//! # Ok(())
+//! # }
 //! ```
 #![deny(unsafe_code)]
 #![warn(missing_docs)]

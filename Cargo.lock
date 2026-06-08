@@ -1190,11 +1190,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "13c2bddecc57b384dee18652358fb23172facb8a2c51ccc10d74c157bdea3292"
 
 [[package]]
-name = "swe-edge-config"
+name = "swe-edge-configbuilder"
 version = "0.1.0"
-source = "git+ssh://git@github.com/sweengineeringlabs/edge.git?tag=swe_edge_config_v0.1.0#91e37a1e4d68e3fee151b806811fd537f7cb0e00"
+source = "git+https://github.com/sweengineeringlabs/edge-configbuilder.git?tag=v0.1.0#842429c1fd3d95255940d6dbd5da17c14c37f8a8"
 dependencies = [
  "dirs",
+ "regex",
  "serde",
  "thiserror 2.0.18",
  "toml",
@@ -1202,10 +1203,23 @@ dependencies = [
 
 [[package]]
 name = "swe-edge-configbuilder"
-version = "0.1.0"
-source = "git+ssh://git@github.com/sweengineeringlabs/edge.git?tag=v0.4.2#e928583725cc091fd46d3be42d8b3365b38dc6ea"
+version = "0.3.0"
+source = "git+https://github.com/sweengineeringlabs/edge-configbuilder.git?tag=v0.3.0#e5f50d6308bf30da1e5c51ff9166b9402b70a245"
 dependencies = [
  "dirs",
+ "regex",
+ "serde",
+ "thiserror 2.0.18",
+ "toml",
+]
+
+[[package]]
+name = "swe-edge-configbuilder"
+version = "0.3.0"
+source = "git+https://github.com/sweengineeringlabs/edge-configbuilder.git?branch=dev#2f32818f8501ab846f266782f3cd5a71714c1176"
+dependencies = [
+ "dirs",
+ "regex",
  "serde",
  "thiserror 2.0.18",
  "toml",
@@ -1217,7 +1231,7 @@ version = "0.1.0"
 dependencies = [
  "futures",
  "serde",
- "swe-edge-configbuilder",
+ "swe-edge-configbuilder 0.3.0 (git+https://github.com/sweengineeringlabs/edge-configbuilder.git?branch=dev)",
  "swe-edge-runtime-message-broker",
  "thiserror 2.0.18",
  "tokio",
@@ -1225,15 +1239,29 @@ dependencies = [
 ]
 
 [[package]]
+name = "swe-edge-message-broker"
+version = "0.3.0"
+source = "git+https://github.com/sweengineeringlabs/edge-message-broker.git?tag=v0.3.0#0ac06b436f94d4ec4ec586f6e925ef9f8e685da9"
+dependencies = [
+ "bytes",
+ "futures",
+ "serde",
+ "swe-edge-configbuilder 0.1.0",
+ "thiserror 1.0.69",
+ "tracing",
+]
+
+[[package]]
 name = "swe-edge-runtime-message-broker"
-version = "0.1.0"
+version = "0.3.1"
+source = "git+https://github.com/sweengineeringlabs/edge-runtime.git?branch=dev#b2cf4c9c678365cfdacaf80e76ef4eead5bbb3cd"
 dependencies = [
  "async-nats",
  "bytes",
  "futures",
  "serde",
- "swe-edge-config",
- "swe-edge-configbuilder",
+ "swe-edge-configbuilder 0.3.0 (git+https://github.com/sweengineeringlabs/edge-configbuilder.git?tag=v0.3.0)",
+ "swe-edge-message-broker",
  "thiserror 1.0.69",
  "tokio",
  "tracing",

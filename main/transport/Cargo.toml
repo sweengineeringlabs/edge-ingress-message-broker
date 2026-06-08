@@ -20,9 +20,7 @@ path = "src/lib.rs"
 
 [features]
 default   = []
-# In-memory broadcast consumer — for testing and single-process deployments.
 in-memory = ["swe-edge-runtime-message-broker/tokio-rt"]
-# NATS-backed consumer.
 nats      = ["swe-edge-runtime-message-broker/nats"]
 
 [dependencies]
@@ -32,27 +30,11 @@ tokio                           = { version = "1.0", features = ["rt-multi-threa
 tracing                         = { version = "0.1", default-features = false }
 swe-edge-runtime-message-broker = { git = "https://github.com/sweengineeringlabs/edge-runtime.git", branch = "dev" }
 serde                           = { version = "1.0", features = ["derive"] }
-swe-edge-configbuilder = { git = "https://github.com/sweengineeringlabs/edge-configbuilder.git", branch = "dev" }
+swe-edge-configbuilder          = { git = "https://github.com/sweengineeringlabs/edge-configbuilder.git", branch = "dev" }
 
 [dev-dependencies]
 tokio   = { version = "1.0", features = ["rt-multi-thread", "macros", "time"] }
 futures = "0.3"
-
-[[test]]
-name = "consumer_int_test"
-path = "tests/consumer_int_test.rs"
-
-[[test]]
-name = "validator_int_test"
-path = "tests/validator_int_test.rs"
-
-[[test]]
-name = "message_broker_dep_int_test"
-path = "tests/message_broker_dep_int_test.rs"
-
-[[test]]
-name = "saf_consumer_int_test"
-path = "tests/saf_consumer_int_test.rs"
 
 [lints]
 workspace = true

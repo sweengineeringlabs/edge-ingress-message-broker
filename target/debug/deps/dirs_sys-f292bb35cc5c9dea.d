@@ -1,7 +1,0 @@
-C:\Users\elvis\AppData\Local\Temp\edge-ingress-message-broker\target\debug\deps\dirs_sys-f292bb35cc5c9dea.d: C:\Users\elvis\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\dirs-sys-0.4.1\src\lib.rs
-
-C:\Users\elvis\AppData\Local\Temp\edge-ingress-message-broker\target\debug\deps\libdirs_sys-f292bb35cc5c9dea.rlib: C:\Users\elvis\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\dirs-sys-0.4.1\src\lib.rs
-
-C:\Users\elvis\AppData\Local\Temp\edge-ingress-message-broker\target\debug\deps\libdirs_sys-f292bb35cc5c9dea.rmeta: C:\Users\elvis\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\dirs-sys-0.4.1\src\lib.rs
-
-C:\Users\elvis\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\dirs-sys-0.4.1\src\lib.rs:

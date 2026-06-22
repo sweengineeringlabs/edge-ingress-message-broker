@@ -2,10 +2,7 @@
 
 #[cfg(feature = "in-memory")]
 mod in_memory_tests {
-    use swe_edge_ingress_message_broker_transport::{
-        check_health, default_consumer, subscribe_to, validate, MessageConsumer, TransportSvc,
-        Validator,
-    };
+    use swe_edge_ingress_message_broker_transport::{TransportSvc, Validator};
 
     struct AlwaysValid;
     impl Validator for AlwaysValid {
@@ -14,31 +11,31 @@ mod in_memory_tests {
         }
     }
 
-    /// @covers: default_consumer
+    /// @covers: TransportSvc::default_consumer
     #[tokio::test]
     async fn test_default_consumer_saf_factory_returns_healthy_consumer() {
-        let c = default_consumer();
+        let c = TransportSvc::default_consumer();
         assert!(c.health_check().await.is_ok());
     }
 
-    /// @covers: subscribe_to
+    /// @covers: TransportSvc::subscribe_to
     #[tokio::test]
     async fn test_subscribe_to_returns_stream_for_default_consumer() {
-        let c = default_consumer();
-        assert!(subscribe_to(&c, "events.test").await.is_ok());
+        let c = TransportSvc::default_consumer();
+        assert!(TransportSvc::subscribe_to(c.as_ref(), "events.test").await.is_ok());
     }
 
-    /// @covers: check_health
+    /// @covers: TransportSvc::check_health
     #[tokio::test]
     async fn test_check_health_returns_ok_for_default_consumer() {
-        let c = default_consumer();
-        assert!(check_health(&c).await.is_ok());
+        let c = TransportSvc::default_consumer();
+        assert!(TransportSvc::check_health(c.as_ref()).await.is_ok());
     }
 
-    /// @covers: validate
+    /// @covers: TransportSvc::validate
     #[test]
     fn test_validate_returns_ok_for_always_valid() {
-        assert!(validate(&AlwaysValid).is_ok());
+        assert!(TransportSvc::validate(&AlwaysValid).is_ok());
     }
 
     /// @covers: TransportSvc::default_consumer

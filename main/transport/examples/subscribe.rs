@@ -4,7 +4,7 @@
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     use futures::StreamExt;
-    use swe_edge_ingress_message_broker_transport::{MessageConsumer, TransportSvc};
+    use swe_edge_ingress_message_broker_transport::TransportSvc;
 
     let consumer = TransportSvc::default_consumer();
     let mut stream = consumer.subscribe("orders.created").await?;

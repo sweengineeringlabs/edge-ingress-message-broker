@@ -16,7 +16,7 @@ service_type     = "transport"
 
 [lib]
 name = "swe_edge_ingress_message_broker_transport"
-path = "src/lib.rs"
+path = "main/src/lib.rs"
 
 [features]
 default   = []
@@ -36,5 +36,10 @@ swe-edge-configbuilder          = { git = "https://github.com/sweengineeringlabs
 tokio   = { version = "1.52", features = ["rt-multi-thread", "macros", "time"] }
 futures = "0.3"
 
-[lints]
-workspace = true
+[lints.rust]
+unsafe_code  = "deny"
+missing_docs = "warn"
+
+[lints.clippy]
+unwrap_used = "deny"
+expect_used = "deny"

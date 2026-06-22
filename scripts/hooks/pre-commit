@@ -8,7 +8,7 @@ cargo fmt --all -- --check
 echo "  2/4 clippy..."
 cargo clippy --workspace --all-targets --features in-memory -- -D warnings
 echo "  3/4 arch audit..."
-arch audit --rs -c 1-2,4,6-38,40-41,44-70,72-89,92,94-95,97-130,134-169,171-194,196-199,202-205,207-210,212-215
+arch audit --rs
 echo "  4/4 cargo audit..."
 cargo audit --deny unsound --deny yanked
 echo "pre-commit: all checks passed."
